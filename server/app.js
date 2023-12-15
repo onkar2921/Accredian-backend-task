@@ -18,7 +18,7 @@ app.use(cors())
 
 // use routes
 app.use("/api/v1",AuthRoutes)
-app.use("/api/v1/",(req,res)=>{
+app.use("/",(req,res)=>{
     return res.send("hey")
 })
 

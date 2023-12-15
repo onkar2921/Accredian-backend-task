@@ -74,11 +74,11 @@ const LoginController=async(req,res)=>{
     
        
 const encryptedDataFromClient = req.body.encryptedData; 
-// console.log("encrypted data at back",encryptedDataFromClient)
+console.log("encrypted data at back",encryptedDataFromClient)
 const decryptedData = CryptoJS.AES.decrypt(encryptedDataFromClient, secretKey).toString(CryptoJS.enc.Utf8);
 
     const {email,password}=JSON.parse(decryptedData);
-
+    console.log("decrypted data at back",email,password)
     // validation of data
 if( !email || !password ){
     return res.status(401).json({message:"please provide username, email, password, contact, address",sucess:false})
