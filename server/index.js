@@ -13,7 +13,9 @@ const app=express()
 app.use(bodyParser.raw({ type: 'application/octet-stream' }));
 
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+    origin:"*"
+}))
 
 
 // use routes
