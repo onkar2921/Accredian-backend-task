@@ -22,7 +22,7 @@ app.use(cors({
 
 app.use(AuthRoutes)
 
-app.use("/",(req,res)=>{
+app.use("/home",(req,res)=>{
     res.send("hey buddy")
 })
 
