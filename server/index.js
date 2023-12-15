@@ -19,10 +19,12 @@ app.use(cors({
 
 
 // use routes
-app.use("/",(req,res)=>{
-    return res.send("hey")
-})
+
 app.use(AuthRoutes)
+
+app.use("/",(req,res)=>{
+     res.send("hey")
+})
 
 const port=process.env.PORT || 8080
 
