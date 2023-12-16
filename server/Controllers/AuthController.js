@@ -35,6 +35,17 @@ if(!username || !email || !password || !contact || !address){
     return res.status(401).json({message:"please provide username, email, password, contact, address",sucess:false})
 }
 
+if (password.length < 6) {
+    return res.status(401).json({ message: "please provide password greater than 6 characters", success: false });
+}
+
+if (contact < 1000000000 || contact > 9999999999) {
+    return res.status(401).json({ message: "please enter a valid contact number", success: false });
+}
+
+
+console.log("contact",contact.length)
+
 
 if (!password) {
     return res.status(400).json({ message: 'Password is missing in the decrypted data.' });
@@ -53,11 +64,12 @@ const uniqueId=uuid4();
             address
           };
         const result=await signUpQuery(userData);
+        console.log("signup result",result)
 
         if(result){
-           return res.status(201).json({message:"sign up sucessfully",sucess:true, result});
+           return res.status(201).json({message:"sign up sucessfully",success:true, result});
         }
-        return res.status(500).json({message:"sign up failed",sucess:false});
+        return res.status(500).json({message:"sign up failed",success:false});
 
 
         
@@ -81,8 +93,9 @@ const decryptedData = CryptoJS.AES.decrypt(encryptedDataFromClient, secretKey).t
     console.log("decrypted data at back",email,password)
     // validation of data
 if( !email || !password ){
-    return res.status(401).json({message:"please provide username, email, password, contact, address",sucess:false})
+    return res.status(401).json({message:"please provide username, email, password, contact, address",success:false})
 }
+
 
 
     //  check user is already exist or not on email
@@ -103,9 +116,9 @@ if( !email || !password ){
      const token= await jwt.sign({email:exist[0][0].email,id:exist[0][0].id},process.env.SECREATEKEY)
 
      if(token){
-        return res.status(201).json({message:"login sucessfully",sucess:true,exist, token});
+        return res.status(201).json({message:"login sucessfully",success:true,exist, token});
      }
-     return res.status(500).json({message:"login failed",sucess:false});
+     return res.status(500).json({message:"login failed",success:false});
 
  } catch (error) {
     console.log(error)
@@ -120,7 +133,7 @@ const GetUserDataController=async(req,res)=>{
         const userId=req.user;
 
         if(!userId){
-          return  res.status(404).json({message:"please provide userid",sucess:false});
+          return  res.status(404).json({message:"please provide userid",success:false});
         }
 
         console.log("userID",userId)
@@ -128,9 +141,9 @@ const GetUserDataController=async(req,res)=>{
         const userData=await getUserdataQuery(userId?.id);
         
         if(userData){
-            return res.status(201).json({message:"getting user data sucessfully",sucess:true,userData});
+            return res.status(201).json({message:"getting user data sucessfully",success:true,userData});
          }
-         return res.status(500).json({message:"failed in getting user data",sucess:false});
+         return res.status(500).json({message:"failed in getting user data",success:false});
     
 
     } catch (error) {
